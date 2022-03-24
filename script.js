@@ -1,3 +1,7 @@
+let score = 0;
+let aiScore = 0;
+let pScore = 0;
+
 function computerPlay(){
     let move;
     let moveInt = Math.floor(Math.random() * 3);
@@ -12,35 +16,42 @@ function playRound(computerMove){
 
     if(playerMove === "rock"){
         if(computerMove === "paper"){
+            ++aiScore
             return console.log("Computer Wins!")
         }
         if(computerMove === "scissors"){
+            ++pScore
             return console.log("Player Wins!")
         }
         if(computerMove === "rock"){
-            return console.log("Wow a Tie!")
+            return console.log("Wow a Tie! No one scores.")
         }
     }
     else if(playerMove === "paper"){
         if(computerMove === "paper"){
-            return console.log("Wow a Tie!")
+            return console.log("Wow a Tie! No one scores.")
         }
         if(computerMove === "scissors"){
+            ++aiScore
             return console.log("Computer Wins!")
         }
         if(computerMove === "rock"){
+            ++pScore
             return console.log("Player Wins!")
         }
     }
     else if(playerMove === "scissors"){
         if(computerMove === "paper"){
+            ++pScore
             return console.log("Player Wins!")
         }
         if(computerMove === "scissors"){
-            return console.log("Wow a Tie!")
+            return console.log("Wow a Tie! No one scores.")
         }
         if(computerMove === "rock"){
+            ++aiScore
             return console.log("Computer Wins!")
+            
         }
     } else {
         return console.log("That is not a valid move!")
@@ -57,8 +68,18 @@ function game(){
     for (let i = 0; i< rounds2Play; i++){
         playRound(computerPlay())
     }
-
-
+    
+    if(pScore+aiScore === 0 ) return
+    if(pScore > aiScore){
+        return console.log(`Player won! ${pScore}:${aiScore}`)
+    }
+    else if(pScore < aiScore){
+        return console.log(`Computer won! ${aiScore}:${pScore}`)
+    }
+    else if(pScore == aiScore){
+        return console.log(`It was a tie! ${pScore}:${aiScore}`)
+    }
+    else return console.log('Somethings not adding up here chief. Somethings wrong!')
 }
 
 
