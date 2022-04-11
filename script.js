@@ -2,6 +2,18 @@ let score = 0;
 let aiScore = 0;
 let pScore = 0;
 
+
+const container = document.querySelector('#scoreContainer');
+
+const playerScore = document.createElement('div');
+playerScore.classList.add("pScore")
+const compScore = document.createElement('div');
+compScore.classList.add("compScore")
+
+container.appendChild(playerScore)
+container.appendChild(compScore)
+
+
 function computerPlay(){
     let move;
     let moveInt = Math.floor(Math.random() * 3);
@@ -9,18 +21,23 @@ function computerPlay(){
     return move
 };
 
-function playRound(computerMove){
+function playRound(computerMove,playerMove){
 
-    playerMove = window.prompt("Choose your move. Rock, Papper, or Scissors?").toLowerCase();
 
+    playerMove = playerMove.toLocaleLowerCase()
 
     if(playerMove === "rock"){
         if(computerMove === "paper"){
             ++aiScore
+            compScore.textContent = `Ai score: ${aiScore}`;
+            return container.appendChild(compScore)
             return console.log("Computer Wins!")
         }
         if(computerMove === "scissors"){
             ++pScore
+            playerScore.textContent = `Player score: ${pScore}`;
+            return container.appendChild(playerScore)
+
             return console.log("Player Wins!")
         }
         if(computerMove === "rock"){
@@ -83,6 +100,15 @@ function game(){
 }
 
 
-game()
+// game()
 
-// console.log(playRound(playerMove, computerMove))
+function consoleLog(inp){
+    return console.log(inp)
+}
+
+
+document.getElementById("rock").addEventListener("click", function() {playRound(computerPlay(), "Rock")}); 
+document.getElementById("paper").addEventListener("click", function() {playRound(computerPlay(), 'Paper')}); 
+document.getElementById("scissors").addEventListener("click", function() {playRound(computerPlay(), "scissors")}); 
+
+
