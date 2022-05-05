@@ -6,10 +6,63 @@ let pScore = 0;
 const pScoreDiv = document.querySelector('#playerScore')
 const aiScoreDiv = document.querySelector("#aiScore")
 
-const playerScore = document.createElement('div');
-playerScore.classList.add("pScore")
-const compScore = document.createElement('div');
-compScore.classList.add("compScore")
+const playerScore = document.createElement('div')
+const compScore = document.createElement('div')
+
+
+const winnerDiv = document.querySelector('.winner')
+const winnnerMessage = document.createElement('div')
+
+playerScore.textContent = `${pScore}`;
+pScoreDiv.appendChild(playerScore)
+
+compScore.textContent = `${aiScore}`;
+aiScoreDiv.appendChild(compScore)
+
+
+const endScreen = document.getElementById("endScreen")
+const gameScreen = document.getElementById("gameScreen")
+
+function updatePlayerScore(score){
+    if(score === 5) {
+        playerScore.textContent = `Player score: ${score}`;
+        pScoreDiv.appendChild(playerScore)
+        updateAiScore(aiScore)
+        return showEndScreen(`Player Wins! ${pScore}:${aiScore}`)
+    }
+    playerScore.textContent = `${score}`;
+    return pScoreDiv.appendChild(playerScore)
+}
+
+function updateAiScore(score){
+    if(score === 5) {
+        updatePlayerScore(pScore)
+        compScore.textContent = `Computer score: ${score}`;
+        pScoreDiv.appendChild(compScore)
+        return showEndScreen(`Computer Wins! ${aiScore}:${pScore}`)
+    }
+    compScore.textContent = `${score}`;
+    return aiScoreDiv.appendChild(compScore)
+}
+
+
+function showEndScreen(winner){
+    console.log(winner)
+    winnnerMessage.textContent = `${winner}`;
+    winnerDiv.appendChild(winnnerMessage)
+
+    gameScreen.classList.add("hidden")
+    endScreen.classList.remove("hidden")
+}
+
+function playAgain(){
+    pScore = 0;
+    aiScore = 0;
+    updateAiScore(aiScore)
+    updatePlayerScore(pScore)
+    gameScreen.classList.remove("hidden")
+    endScreen.classList.add("hidden")
+}
 
 function computerPlay(){
     let move;
@@ -18,9 +71,6 @@ function computerPlay(){
     return move
 };
 
-function checkWinner(score){
-    if(score  === 5) return "winner"
-}
 
 
 function playRound(computerMove,playerMove){
@@ -31,15 +81,11 @@ function playRound(computerMove,playerMove){
     if(playerMove === "rock"){
         if(computerMove === "paper"){
             ++aiScore
-            if(aiScore === 5) return "Do something"
-            compScore.textContent = `Ai score: ${aiScore}`;
-            return aiScoreDiv.appendChild(compScore)
+            updateAiScore(aiScore)
         }
         if(computerMove === "scissors"){
             ++pScore
-            if(pScore === 5) return "Do something"
-            playerScore.textContent = `Player score: ${pScore}`;
-            return pScoreDiv.appendChild(playerScore)
+            updatePlayerScore(pScore)
         }
         if(computerMove === "rock"){
             return console.log("Wow a Tie! No one scores.")
@@ -51,33 +97,24 @@ function playRound(computerMove,playerMove){
         }
         if(computerMove === "scissors"){
             ++aiScore
-            if(aiScore === 5) return "Do something"
-            compScore.textContent = `Ai score: ${aiScore}`;
-            return aiScoreDiv.appendChild(compScore)
+            updateAiScore(aiScore)
         }
         if(computerMove === "rock"){
             ++pScore
-            if(pScore === 5) return "Do something"
-            playerScore.textContent = `Player score: ${pScore}`;
-            return pScoreDiv.appendChild(playerScore)
+            updatePlayerScore(pScore)
         }
     }
     else if(playerMove === "scissors"){
         if(computerMove === "paper"){
             ++pScore
-            if(pScore === 5) return "Do something"
-            playerScore.textContent = `Player score: ${pScore}`;
-            return container.appendChild(playerScore)
+            updatePlayerScore(pScore)
         }
         if(computerMove === "scissors"){
             return console.log("Wow a Tie! No one scores.")
         }
         if(computerMove === "rock"){
             ++aiScore
-            if(aiScore === 5) return "Do something"
-            compScore.textContent = `Ai score: ${aiScore}`;
-            return container.appendChild(compScore)
-            
+            updateAiScore(aiScore)            
         }
     } else {
         return console.log("That is not a valid move!")
@@ -120,4 +157,4 @@ document.getElementById("rock").addEventListener("click", function() {playRound(
 document.getElementById("paper").addEventListener("click", function() {playRound(computerPlay(), 'Paper')}); 
 document.getElementById("scissors").addEventListener("click", function() {playRound(computerPlay(), "scissors")}); 
 
-
+document.getElementById("playAgain").addEventListener("click", function() {playAgain()}); 
