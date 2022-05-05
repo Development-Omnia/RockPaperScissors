@@ -3,16 +3,13 @@ let aiScore = 0;
 let pScore = 0;
 
 
-const container = document.querySelector('#scoreContainer');
+const pScoreDiv = document.querySelector('#playerScore')
+const aiScoreDiv = document.querySelector("#aiScore")
 
 const playerScore = document.createElement('div');
 playerScore.classList.add("pScore")
 const compScore = document.createElement('div');
 compScore.classList.add("compScore")
-
-container.appendChild(playerScore)
-container.appendChild(compScore)
-
 
 function computerPlay(){
     let move;
@@ -20,6 +17,11 @@ function computerPlay(){
     moveInt === 0  ? move = "rock" : moveInt === 1 ? move = "paper" : moveInt === 2 ? move = "scissors" : move='error';
     return move
 };
+
+function checkWinner(score){
+    if(score  === 5) return "winner"
+}
+
 
 function playRound(computerMove,playerMove){
 
@@ -29,16 +31,15 @@ function playRound(computerMove,playerMove){
     if(playerMove === "rock"){
         if(computerMove === "paper"){
             ++aiScore
+            if(aiScore === 5) return "Do something"
             compScore.textContent = `Ai score: ${aiScore}`;
-            return container.appendChild(compScore)
-            return console.log("Computer Wins!")
+            return aiScoreDiv.appendChild(compScore)
         }
         if(computerMove === "scissors"){
             ++pScore
+            if(pScore === 5) return "Do something"
             playerScore.textContent = `Player score: ${pScore}`;
-            return container.appendChild(playerScore)
-
-            return console.log("Player Wins!")
+            return pScoreDiv.appendChild(playerScore)
         }
         if(computerMove === "rock"){
             return console.log("Wow a Tie! No one scores.")
@@ -50,24 +51,32 @@ function playRound(computerMove,playerMove){
         }
         if(computerMove === "scissors"){
             ++aiScore
-            return console.log("Computer Wins!")
+            if(aiScore === 5) return "Do something"
+            compScore.textContent = `Ai score: ${aiScore}`;
+            return aiScoreDiv.appendChild(compScore)
         }
         if(computerMove === "rock"){
             ++pScore
-            return console.log("Player Wins!")
+            if(pScore === 5) return "Do something"
+            playerScore.textContent = `Player score: ${pScore}`;
+            return pScoreDiv.appendChild(playerScore)
         }
     }
     else if(playerMove === "scissors"){
         if(computerMove === "paper"){
             ++pScore
-            return console.log("Player Wins!")
+            if(pScore === 5) return "Do something"
+            playerScore.textContent = `Player score: ${pScore}`;
+            return container.appendChild(playerScore)
         }
         if(computerMove === "scissors"){
             return console.log("Wow a Tie! No one scores.")
         }
         if(computerMove === "rock"){
             ++aiScore
-            return console.log("Computer Wins!")
+            if(aiScore === 5) return "Do something"
+            compScore.textContent = `Ai score: ${aiScore}`;
+            return container.appendChild(compScore)
             
         }
     } else {
